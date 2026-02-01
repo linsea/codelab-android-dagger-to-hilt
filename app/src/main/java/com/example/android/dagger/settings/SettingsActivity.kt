@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.android.dagger.MyApplication
 import com.example.android.dagger.R
 import com.example.android.dagger.login.LoginActivity
+import com.example.android.dagger.main.MainActivity.UserManagerEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
 class SettingsActivity : AppCompatActivity() {
@@ -32,10 +34,10 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var settingsViewModel: SettingsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Grabs instance of UserManager from the application graph
+        val entryPoint = EntryPointAccessors.fromApplication(applicationContext, UserManagerEntryPoint::class.java)
+        val userManager = entryPoint.userManager()
 
-        // Gets the userManager from the application graph to obtain the UserComponent
-        // and gets this Activity injected
-        val userManager = (application as MyApplication).appComponent.userManager()
         userManager.userComponent!!.inject(this)
 
         super.onCreate(savedInstanceState)
