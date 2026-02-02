@@ -51,11 +51,12 @@ class MainActivity : AppCompatActivity() {
      * else carry on with MainActivity.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
         // Grabs instance of UserManager from the application graph
         val entryPoint = EntryPointAccessors.fromApplication(applicationContext, UserManagerEntryPoint::class.java)
         val userManager = entryPoint.userManager()
+
+        super.onCreate(savedInstanceState)
 
         if (!userManager.isUserLoggedIn()) {
             if (!userManager.isUserRegistered()) {
