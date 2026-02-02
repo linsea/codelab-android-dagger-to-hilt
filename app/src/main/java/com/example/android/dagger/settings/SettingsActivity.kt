@@ -23,22 +23,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.android.dagger.MyApplication
 import com.example.android.dagger.R
 import com.example.android.dagger.login.LoginActivity
-import com.example.android.dagger.main.MainActivity.UserManagerEntryPoint
+import com.example.android.dagger.user.UserManager
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
 
     // @Inject annotated fields will be provided by Dagger
     @Inject
     lateinit var settingsViewModel: SettingsViewModel
+    @Inject
+    lateinit var userManager: UserManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Grabs instance of UserManager from the application graph
-        val entryPoint = EntryPointAccessors.fromApplication(applicationContext, UserManagerEntryPoint::class.java)
-        val userManager = entryPoint.userManager()
-
-        userManager.userComponent!!.inject(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
